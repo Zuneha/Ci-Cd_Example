@@ -1,0 +1,22 @@
+apiVersion: gateway.kyma-project.io/v1beta1
+kind: APIRule
+metadata:
+  name: spring-boot-docker
+spec:
+  gateway: kyma-system/kyma-gateway
+  host: spring-boot-docker.c-7ba2333.kyma.ondemand.com
+  # host: metadata-name.<hostname> # replace <hostname> with your Kyma hostname which we can get by
+  #kubectl get gateway kyma-gateway -n kyma-system -o=jsonpath='{.spec.servers[0].hosts[0]}'
+  rules:
+    - accessStrategies:
+        - config: {}
+          handler: noop
+      methods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+      path: /.*
+  service:
+    name: spring-boot-docker
+    port: 8080
