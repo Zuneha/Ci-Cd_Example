@@ -18,7 +18,7 @@ spec:
         app: tomaop
     spec:
       containers:
-        - image: registry.hub.docker.com/zuneha/my_spring_app:latest
+        - image: registry.hub.docker.com/zuneha/my-spring-app:latest
           imagePullPolicy: Always
           name: tomaop
           ports:
