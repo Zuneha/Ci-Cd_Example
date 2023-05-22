@@ -1,51 +1,56 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tomaop
+  creationTimestamp: null
   labels:
-    app: tomaop
+    app: spring-boot-docker
+    kyma-grafana: enabled
+  name: spring-boot-docker
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: tomaop
-  strategy:
-    rollingUpdate:
-      maxUnavailable: 1
-  replicas: 1
+      app: spring-boot-docker
+  strategy: {}
   template:
     metadata:
+      creationTimestamp: null
       labels:
-        app: tomaop
+        app: spring-boot-docker
+        kyma-grafana: enabled
     spec:
       containers:
-        - image: registry.hub.docker.com/zuneha/my-spring-app:latest
-          imagePullPolicy: Always
-          name: tomaop
-          ports:
-            - name: http
-              containerPort: 8080
-          env:
-            - name: DEBUG
-              value: "true"
-            - name: RENEWCERT_JOB_CRON
-              value: "00 00 */12 * * *"
-          resources:
-            requests:
-              memory: "512Mi"
-              cpu: "50m"
+      - image: zuneha/my-spring-app
+        name: spring-boot-docker
+        resources:
             limits:
-              memory: "1000Mi"
-              cpu: "100m"
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
+        ports:
+          - containerPort: 8080
+        envFrom:
+          - secretRef:
+              name: spring-boot-docker
+              optional: true
+status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: tomaop
+  creationTimestamp: null
   labels:
-    app: tomaop
+    app: spring-boot-docker
+  name: spring-boot-docker
 spec:
   ports:
-    - name: http
-      port: 8080
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
   selector:
-    app: tomaop
+    app: spring-boot-docker
+  type: ClusterIP
+status:
+  loadBalancer: {}
