@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomaop
+  labels:
+    app: tomaop
+spec:
+  selector:
+    matchLabels:
+      app: tomaop
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tomaop
+    spec:
+      containers:
+        - image: registry.hub.docker.com/zuneha/my_spring_app:latest
+          imagePullPolicy: Always
+          name: tomaop
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: DEBUG
+              value: "true"
+            - name: RENEWCERT_JOB_CRON
+              value: "00 00 */12 * * *"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "50m"
+            limits:
+              memory: "1000Mi"
+              cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tomaop
+  labels:
+    app: tomaop
+spec:
+  ports:
+    - name: http
+      port: 8080
+  selector:
+    app: tomaop
