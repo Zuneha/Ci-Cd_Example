@@ -4,7 +4,7 @@ metadata:
   name: spring-boot-docker
 spec:
   gateway: kyma-system/kyma-gateway
-  host: api.c-562cae1.kyma.ondemand.com
+  host: spring-boot-docker.c-562cae1.kyma.ondemand.com
   # host: metadata-name.<hostname> # replace <hostname> with your Kyma hostname which we can get by
   #kubectl get gateway kyma-gateway -n kyma-system -o=jsonpath='{.spec.servers[0].hosts[0]}'
   rules:
