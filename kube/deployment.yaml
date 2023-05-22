@@ -20,7 +20,7 @@ spec:
         kyma-grafana: enabled
     spec:
       containers:
-      - image: zuneha/my-spring-app
+      - image: zuneha/my-spring-app:latest
         name: spring-boot-docker
         resources:
             limits:
