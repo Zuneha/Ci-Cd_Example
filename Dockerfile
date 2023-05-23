@@ -10,7 +10,7 @@ RUN mvn package
 FROM openjdk:8-jdk-alpine
 WORKDIR /app
 
-COPY target/spring-boot-hello-world-example-0.0.1-SNAPSHOT.jar /app 
+COPY  --from=maven/app/target/spring-boot-hello-world-example-0.0.1-SNAPSHOT.jar /app 
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "spring-boot-hello-world-example-0.0.1-SNAPSHOT.jar"]
