@@ -1,4 +1,4 @@
-FROM maven:3.9.2-openjdk-8 AS maven
+FROM maven:4.0.0-openjdk-8 AS maven
 LABEL MAINTAINER="zunehakhanam@gmail.com"
 
 WORKDIR /app
